@@ -1,26 +1,26 @@
 from machine import Pin
 import utime
 
-trigger = Pin(21, Pin.OUT)
-echo = Pin(20, Pin.IN)
+Trigger = Pin(21, Pin.OUT)
+Echo = Pin(20, Pin.IN)
 
 
 def ultra():
-    trigger.low()
+    Trigger.low()
     utime.sleep(0.5)
-    trigger.high()
+    Trigger.high()
     utime.sleep(0.5)
-    trigger.low()
-    while echo.value() == 0:
+    Trigger.low()
+    while Echo.value() == 0:
         SignalOn = utime.ticks_us()
-    while echo.value() == 1:
+    while Echo.value() == 1:
         SignalOff = utime.ticks_us()
 
-    timepassed = SignalOff - SignalOn
-    distance = (timepassed * 0.0343) / 2
-    distance = round(distance, 3)
+    TimePassed = SignalOff - SignalOn
+    Distance = (TimePassed * 0.0343) / 2
+    Distance = round(Distance, 3)
 
-    print(f"{round(distance, 2)} cm or {round((distance / 100), 3)} Meters")
+    print(f"{round(Distance)} cm or {round((Distance / 100), 2)} Meters")
 
 while True:
     ultra()
