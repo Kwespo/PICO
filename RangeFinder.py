@@ -1,16 +1,8 @@
-from machine import Pin, I2C
-from ssd1306 import SSD1306_I2C
+from machine import Pin
 import utime
 
-WIDTH = 128
-HEIGHT = 64
-
-i2c = I2C(0, scl = Pin(17), sda = Pin(16), freq=400000)
-display = SSD1306_I2C(WIDTH, HEIGHT, i2c)
-
-
-trigger = Pin(21, Pin.OUT)
-echo = Pin(20, Pin.IN)
+Trigger = Pin(21, Pin.OUT)
+Echo = Pin(20, Pin.IN)
 
 
 def ultra():
@@ -32,14 +24,11 @@ def ultra():
     
     return str(distance)
 
+    TimePassed = SignalOff - SignalOn
+    Distance = (TimePassed * 0.0343) / 2
+    Distance = round(Distance, 3)
 
+    print(f"{round(Distance)} cm or {round((Distance / 100), 2)} Meters")
 
-print("fok")
-ngf = ultra()
-print(ngf)
 while True:
-    display.text(ultra(),0,0)
-    display.show()
-    display.fill(0)
-    utime.sleep(1)
-    
+    ultra()
