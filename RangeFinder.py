@@ -6,15 +6,23 @@ Echo = Pin(20, Pin.IN)
 
 
 def ultra():
-    Trigger.low()
-    utime.sleep(0.5)
-    Trigger.high()
-    utime.sleep(0.5)
-    Trigger.low()
-    while Echo.value() == 0:
-        SignalOn = utime.ticks_us()
-    while Echo.value() == 1:
-        SignalOff = utime.ticks_us()
+    trigger.low()
+    utime.sleep_us(2)
+    trigger.high()
+    utime.sleep_us(5)
+    trigger.low()
+    while echo.value() == 0:
+        signaloff = utime.ticks_us()
+    while echo.value() == 1:
+        signalon = utime.ticks_us()
+        
+    timepassed = signalon - signaloff
+    distance = (timepassed * 0.0343) / 2
+    distance = "{:.1f}".format(distance)
+    
+    print(distance + " cm")
+    
+    return str(distance)
 
     TimePassed = SignalOff - SignalOn
     Distance = (TimePassed * 0.0343) / 2
